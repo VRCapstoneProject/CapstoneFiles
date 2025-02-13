@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
     <style>
-        /* Reset margin and padding for body and html */
-        /* Reset margin and padding for body and html */
         html, body {
             margin: 0;
             padding: 0;
@@ -20,74 +18,21 @@
             flex-direction: column;
             align-items: center;
             height: 100vh;
-            font-weight: bold; /* Make the font bold */
+            font-weight: bold;
         }
 
         h1 {
-            color: #333;
+            color: white;
             font-size: 3rem;
             text-align: center;
-            margin: 0;  /* Remove top margin to eliminate white space */
+            margin: 0;
             width: 100%;
             background-color: #4c70b3;
-            color: white;
             padding: 35px 0;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-        }
-
-        .view-portal-btn {
-            position: absolute;
-            left: 20px;  /* Move the button to the right */
-            padding: 10px 20px;
-            color: white;
-            align-items: center;
-            appearance: none;
-            background-color: #28a745;
-            border-radius: 4px;
-            border-width: 0;
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-            box-sizing: border-box;
-            color: #fff;
-            cursor: pointer;
-            display: inline-flex;
-            font-family: "JetBrains Mono",monospace;
-            height: 48px;
-            justify-content: center;
-            line-height: 1;
-            list-style: none;
-            overflow: hidden;
-            padding-left: 16px;
-            padding-right: 16px;
-            text-align: left;
-            text-decoration: none;
-            transition: box-shadow .15s,transform .15s;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-            white-space: nowrap;
-            will-change: box-shadow,transform;
-            font-size: 18px;
-        }
-
-        .view-portal-btn:focus {
-            box-shadow: #175333 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.4) 0 7px 13px -3px, #175333 0 -3px 0 inset;
-        }
-
-        .view-portal-btn:hover {
-        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.4) 0 7px 13px -3px, #175333 0 -3px 0 inset;
-        transform: translateY(-2px);
-        }
-
-        .view-portal-btn:active {
-        box-shadow: #175333 0 3px 7px inset;
-        transform: translateY(2px);
-        }
-
-        .view-portal-btn:hover {
-            background-color: #218838;
         }
 
         .leaderboard-container {
@@ -98,38 +43,32 @@
             max-width: 800px;
             width: 100%;
             flex: 1 0 auto;
+            text-align: center;
         }
 
         .leaderboard-entry {
             padding: 10px;
             border-bottom: 1px solid #ddd;
+            cursor: pointer;
         }
 
         .leaderboard-entry:last-child {
             border-bottom: none;
         }
 
-        .leaderboard-entry h2 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #333;
+        .leaderboard-entry:hover {
+            background-color: #f0f0f0;
         }
 
         .score {
             font-weight: bold;
             color: #4c70b3;
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-        }
-
-        .topic-scores {
-            margin-top: 10px;
         }
 
         .topic-scores p {
             margin: 0;
             font-size: 0.9rem;
             color: #555;
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
         }
 
         .pagination {
@@ -144,8 +83,7 @@
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 5px;  /* Smooth edges */
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+            border-radius: 5px;
         }
 
         .pagination button:disabled {
@@ -156,32 +94,114 @@
             margin: 0 5px;
             font-size: 1rem;
         }
+
+        .room-input-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .room-input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .room-btn {
+            margin-left: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            background-color: #4c70b3;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .room-btn:hover {
+            background-color: #3b5b99;
+        }
     </style>
 </head>
 <body>
-    <h1>
-        Leaderboard
-        <button class="view-portal-btn" onclick="window.location.href = 'index.html';"> ← Back to Question Portal</button>
-    </h1>
+    <h1>Leaderboard</h1>
+
+    <div class="room-input-container">
+        <input type="text" id="roomNumber" class="room-input" placeholder="Enter Room Number">
+        <button class="room-btn" onclick="fetchRoomLeaderboards()">Find Leaderboards</button>
+    </div>
+
     <div class="leaderboard-container">
+        <div id="leaderboard-list"></div>
         <div id="leaderboard-content"></div>
         <div class="pagination">
             <button id="prev-btn" onclick="changePage(-1)">Previous</button>
-            <span id="page-number"></span> <!-- Page number updated to show just the page number -->
+            <span id="page-number"></span>
             <button id="next-btn" onclick="changePage(1)">Next</button>
         </div>
     </div>
 
     <script>
-        const PAT = 'EDIT_KEY_PLEASE';  // Add your personal access token here
-        const apiUrl = 'https://api.github.com/repos/VRCapstoneProject/UnityQuestionsRepo/contents/leaderboard.json';
+        const PAT = 'EDIT KEY PLEASE';
+        const API_BASE_URL = 'https://api.github.com/repos/VRCapstoneProject/UnityQuestionsRepo/contents/';
 
         let currentPage = 1;
         const itemsPerPage = 6;
         let leaderboardData = [];
 
-        function fetchLeaderboardData() {
-            fetch(apiUrl, {
+        function fetchRoomLeaderboards() {
+            const roomNumber = document.getElementById('roomNumber').value.trim();
+            if (!roomNumber) {
+                alert("Please enter a room number.");
+                return;
+            }
+
+            const roomLeaderboardUrl = `${API_BASE_URL}${roomNumber}/leaderboard`;
+
+            fetch(roomLeaderboardUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${PAT}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Room ${roomNumber} does not exist or has no leaderboards.`);
+                }
+                return response.json();
+            })
+            .then(files => {
+                const leaderboardList = document.getElementById('leaderboard-list');
+                leaderboardList.innerHTML = ''; // Clear previous list
+
+                if (files.length === 0) {
+                    leaderboardList.innerHTML = '<p>No leaderboard files found.</p>';
+                    return;
+                }
+
+                files.forEach(file => {
+                    if (file.name.endsWith('_leaderboard.json')) {
+                        const entryDiv = document.createElement('div');
+                        entryDiv.classList.add('leaderboard-entry');
+                        entryDiv.textContent = file.name.replace('_leaderboard.json', '');
+                        entryDiv.onclick = () => fetchLeaderboardData(roomNumber, file.name);
+                        leaderboardList.appendChild(entryDiv);
+                    }
+                });
+            })
+            .catch(error => {
+                document.getElementById('leaderboard-list').innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        }
+
+        function fetchLeaderboardData(roomNumber, filename) {
+            const leaderboardUrl = `${API_BASE_URL}${roomNumber}/leaderboard/${filename}`;
+
+            fetch(leaderboardUrl, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${PAT}`,
@@ -194,13 +214,14 @@
                 renderLeaderboard();
             })
             .catch(error => {
-                console.error('Error fetching leaderboard data:', error);
+                console.error('Error fetching leaderboard:', error);
+                document.getElementById('leaderboard-content').innerHTML = `<p>Error loading leaderboard.</p>`;
             });
         }
 
         function renderLeaderboard() {
             const leaderboardContent = document.getElementById('leaderboard-content');
-            leaderboardContent.innerHTML = '';  // Clear existing content
+            leaderboardContent.innerHTML = '';
 
             const startIdx = (currentPage - 1) * itemsPerPage;
             const endIdx = startIdx + itemsPerPage;
@@ -220,12 +241,16 @@
                 const topicScoresDiv = document.createElement('div');
                 topicScoresDiv.classList.add('topic-scores');
 
-                const topicScores = JSON.parse(entry.topicScores).scores;
-                topicScores.forEach(topic => {
-                    const topicScore = document.createElement('p');
-                    topicScore.textContent = `${topic.topic}: ${topic.score} (${topic.scoreRatio})`;
-                    topicScoresDiv.appendChild(topicScore);
-                });
+                try {
+                    const topicScores = JSON.parse(entry.topicScores).scores;
+                    topicScores.forEach(topic => {
+                        const topicScore = document.createElement('p');
+                        topicScore.textContent = `${topic.topic}: ${topic.score} (${topic.scoreRatio})`;
+                        topicScoresDiv.appendChild(topicScore);
+                    });
+                } catch (e) {
+                    console.error("Error parsing topic scores:", e);
+                }
 
                 entryDiv.appendChild(name);
                 entryDiv.appendChild(score);
@@ -233,7 +258,6 @@
                 leaderboardContent.appendChild(entryDiv);
             });
 
-            // Update page number to show just the current page
             document.getElementById('page-number').textContent = `${currentPage}`;
             document.getElementById('prev-btn').disabled = currentPage === 1;
             document.getElementById('next-btn').disabled = currentPage * itemsPerPage >= leaderboardData.length;
@@ -243,9 +267,6 @@
             currentPage += direction;
             renderLeaderboard();
         }
-
-        // Fetch leaderboard data on page load
-        fetchLeaderboardData();
     </script>
 </body>
 </html>
