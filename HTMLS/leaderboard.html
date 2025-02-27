@@ -10,9 +10,21 @@
             padding: 0;
             height: 100%;
         }
+        @font-face {
+    font-family: 'Din_Next';
+    src: url('fonts/DINNextW1G-Regular.otf') format('opentype'); /* ✅ Last fallback */
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+  font-family: "Din_Next_Light";
+  src: url('fonts/DINNextW1G-Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Din_Next';
             background-color: #f4f4f4;
             display: flex;
             flex-direction: column;
@@ -22,12 +34,13 @@
         }
 
         h1 {
+            font-family: 'Tungsten';
             color: white;
             font-size: 3rem;
             text-align: center;
             margin: 0;
             width: 100%;
-            background-color: #4c70b3;
+            background-color: #000000;
             padding: 35px 0;
             display: flex;
             justify-content: center;
@@ -50,6 +63,7 @@
             padding: 10px;
             border-bottom: 1px solid #ddd;
             cursor: pointer;
+            font-size: 25px;
         }
 
         .leaderboard-entry:last-child {
@@ -79,7 +93,7 @@
         .pagination button {
             padding: 5px 10px;
             margin: 0 5px;
-            background-color: #4c70b3;
+            
             color: white;
             border: none;
             cursor: pointer;
@@ -99,6 +113,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            margin-top:20px;
         }
 
         .room-input {
@@ -108,6 +123,9 @@
             border-radius: 5px;
             width: 200px;
             text-align: center;
+            font-family: 'Din_Next';
+            font-size:20px;
+
         }
 
         .room-btn {
@@ -115,18 +133,85 @@
             padding: 10px;
             font-size: 1rem;
             border: none;
-            background-color: #4c70b3;
             color: white;
             cursor: pointer;
             border-radius: 5px;
+            font-family: 'Din_Next';
         }
 
         .room-btn:hover {
-            background-color: #3b5b99;
         }
+
+        button {
+        align-items: center;
+        appearance: none;
+        background-color: #FF3A45;
+        border-radius: 4px;
+        border-width: 0;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+          rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: 'Din_Next';
+        height: 48px;
+        justify-content: center;
+        line-height: 1;
+        list-style: none;
+        overflow: hidden;
+        padding-left: 16px;
+        padding-right: 16px;
+        position: relative;
+        text-align: left;
+        text-decoration: none;
+        transition: box-shadow 0.15s, transform 0.15s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        white-space: nowrap;
+        will-change: box-shadow, transform;
+        font-size: 18px;
+      }
+
+      button:focus {
+        box-shadow: #22375e 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #263c64 0 -3px 0 inset;
+      }
+
+      button:hover {
+        box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #263c64 0 -3px 0 inset;
+        transform: translateY(-2px);
+      }
+
+      button:active {
+        box-shadow: #22375e 0 3px 7px inset;
+        transform: translateY(2px);
+      }
+      .back-button {
+    position: absolute;
+    top: 45px;
+    left: 20px;
+    background-color: #2EA349;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    
+    z-index: 1000; /* ✅ Ensure it's above everything */
+}
+
+
     </style>
 </head>
 <body>
+    <button class="back-button" onclick="goBackToPortal()">← Back to Question Portal</button>
+
     <h1>Leaderboard</h1>
 
     <div class="room-input-container">
@@ -145,7 +230,7 @@
     </div>
 
     <script>
-        const PAT = 'EDIT KEY PLEASE';
+        const PAT = 'PATKEYHERE';
         const API_BASE_URL = 'https://api.github.com/repos/VRCapstoneProject/UnityQuestionsRepo/contents/';
 
         let currentPage = 1;
@@ -267,6 +352,9 @@
             currentPage += direction;
             renderLeaderboard();
         }
+        function goBackToPortal() {
+    window.location.href = "index.html";
+}
     </script>
 </body>
 </html>
